@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Welcome to my page for testing websockets!</title>
+    </head>
+    <body>
+        <h1>Welcome to my page for testing websockets!</h1>
+        <button onclick="openSocket()">Click here to open the socket</button>
+        <ul id="server_messages">
+            
+        </ul>
+    </body>
+    <footer>
+        <script>
+            function openSocket() {
+                const url = "ws://localhost:3000";
+                const websocket = new WebSocket(url);
+
+                websocket.onopen = () => {
+                    websocket.send(new Date())
+                }
+                
+                
+                websocket.onmessage = (event) => {
+                    console.log({event})
+                    const content = event.data
+                    const oldVal = document.getElementById("server_messages").innerHTML
+                    document.getElementById("server_messages").innerHTML = oldVal + `<li>${content}</li>`
+                }
+            }
+        </script>
+    </footer>
+</html>
